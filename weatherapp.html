@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather App</title>
+  <style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') no-repeat center center fixed;
+    background-size: cover;
+    text-align: center;
+    padding: 50px;
+    color: #333;
+  }
+
+  /* Add a subtle semi-transparent background to content for readability */
+  #homePage, #weatherPage {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    padding: 20px;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  select, button {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 6px;
+  }
+
+  .weather-box {
+    margin-top: 30px;
+    display: inline-block;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .icon {
+    width: 80px;
+    margin: 10px 0;
+  }
+
+  .temp {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  .desc {
+    color: #444;
+  }
+
+  a {
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #007bff;
+  }
+
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  #citySelect {
+    max-width: 200px;
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+
+  <div id="homePage">
+    <h1>Weather App</h1>
+    <p>Select a city to view its weather:</p>
+    <select id="citySelect">
+      <option value="">-- choose city --</option>
+      <option value="Delhi">Delhi</option>
+      <option value="Mumbai">Mumbai</option>
+      <option value="Chennai">Chennai</option>
+      <option value="Bangalore">Bangalore</option>
+      <option value="Kolkata">Kolkata</option>
+    </select>
+    <br /><br />
+    <button onclick="showWeather()">View Weather</button>
+  </div>
+
+  <div id="weatherPage" style="display: none;">
+    <a href="#" onclick="goBack()">⬅️ Back</a>
+    <h1 id="weatherTitle">City Weather</h1>
+    <div id="weatherBox" class="weather-box">
+      <h2 id="cityName"></h2>
+      <img id="icon" class="icon" src="" alt="Weather Icon" />
+      <p id="temp" class="temp"></p>
+      <p id="desc" class="desc"></p>
+    </div>
+  </div>
+
+  <script>
+    const WeatherData = {
+      "Delhi": {
+        temp: 39,
+        description: "Sunny and Hot",
+        icon: "https://cdn-icons-png.flaticon.com/512/869/869869.png"
+      },
+      "Mumbai": {
+        temp: 30,
+        description: "Humid and Rainy",
+        icon: "https://cdn-icons-png.flaticon.com/512/414/414974.png"
+      },
+      "Chennai": {
+        temp: 36,
+        description: "Cloudy and Humid",
+        icon: "https://cdn-icons-png.flaticon.com/512/1163/1163624.png"
+      },
+      "Bangalore": {
+        temp: 27,
+        description: "Pleasant and Cloudy",
+        icon: "https://cdn-icons-png.flaticon.com/512/414/414927.png"
+      },
+      "Kolkata": {
+        temp: 33,
+        description: "Thunderstorms expected",
+        icon: "https://cdn-icons-png.flaticon.com/512/1146/1146860.png"
+      }
+    };
+
+    function showWeather() {
+      const city = document.getElementById("citySelect").value;
+      const data = WeatherData[city];
+
+      if (!city) {
+        alert("Please select a city.");
+        return;
+      }
+
+      if (!data) {
+        alert("Weather data not found.");
+        return;
+      }
+
+      document.getElementById("cityName").innerText = city;
+      document.getElementById("icon").src = data.icon;
+      document.getElementById("temp").innerText = `${data.temp}°C`;
+      document.getElementById("desc").innerText = data.description;
+
+      document.getElementById("homePage").style.display = "none";
+      document.getElementById("weatherPage").style.display = "block";
+    }
+
+    function goBack() {
+      document.getElementById("homePage").style.display = "block";
+      document.getElementById("weatherPage").style.display = "none";
+    }
+  </script>
+</body>
+</html>
